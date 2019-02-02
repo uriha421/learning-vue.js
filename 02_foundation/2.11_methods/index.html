@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>vue.js</title>
+</head>
+<body>
+<div id="app">
+  <!-- input the number of items to buy -->
+  <ul>
+    <li v-for="item in items" v-bind:key="item.name">
+      {{ item.name }}: <input v-on:input="item.quantity = $event.target.value" v-bind:value="item.quantity">
+    </li>
+  </ul>
+
+  <hr>
+
+  <!-- purchase form  -->
+  <div v-bind:style="errorMessageStyle">
+    <!-- show all the items' name, price, and quantity-->
+    <ul>
+      <li v-for="item in items" v-bind:key="item.name">
+        {{ item.name }}: {{ item.price | numberWithDelimiter }} x {{ item.quantity | numberWithDelimiter }}
+      </li>
+    </ul>
+
+    <!-- show total price and total price(tax inclueded)-->
+    <p>total price: {{ totalPrice | numberWithDelimiter }}</p>
+    <p>total price: {{ totalPriceWithTax | numberWithDelimiter }}, (tax inclueded)</p>
+    
+    <!-- show alret if the total price is less than 1,000 yen-->
+    <p v-show="!canBuy">
+      Buy {{ minPrice | numberWithDelimiter }} yen or over!
+    </p>
+    
+    <!-- purchase button -->
+  <button v-bind:disabled="!canBuy" v-on:click="doBuy">BUY</button>
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="app.js"></script>
+</body>
+</html>

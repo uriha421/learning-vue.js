@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>vue.js</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- navigations -->
+  <nav>
+    <router-link to='/top'>top</router-link>
+    <router-link to='/users'>users</router-link>
+    <router-link to='/users/new?redirect=true'>register</router-link>
+    <router-link to='/login' v-show="!Auth.loggedIn()">login</router-link>
+    <router-link to='/logout' v-show="Auth.loggedIn()">logout</router-link>
+  </nav>
+
+  <!-- view -->
+  <router-view></router-view>
+
+</div>
+
+<!-- user-list template -->
+<script type="text/x-template" id="user-list">
+  <div>
+    <div v-if="loading" class="loading">Loading...</div>
+    <div v-if="error" class="error">{{ error }}</div>
+  
+    <div v-for="user in users" v-bind:key="user.id">
+      <router-link v-bind:to="{ path: '/user/' + user.id }">{{ user.name }}</router-link>
+    </div>
+  </div>
+</script>
+
+<!-- user-create template -->
+<script type="text/x-template" id="user-create">
+  <div>
+    <div v-if="sending" class="sending">Sending...</div>
+    <div>
+      <h2>Register</h2>
+      <div>
+        <label>Name:</label>
+        <input type="text" v-model="user.name">
+        <label>Description:</label>
+        <textarea v-model="user.description"></textarea>
+      </div>
+      <div v-if="error" class="error">{{ error }}</div>
+      <div><input type="button" v-on:click="createUser" value="SUBMIT"></div>
+    </div>
+  </div>
+</script>
+
+<!-- user-detail template -->
+<script type="text/x-template" id="user-detail">
+  <div>
+    <div v-if="loading" class="loading">Loading...</div>
+    <div v-if="error" class="error">{{ error }}</div>
+  
+    <div v-if="user">
+      <h2>{{ user.name }}</h2>
+      <p>{{ user.description }}</p>
+    </div>
+  </div>
+</script>
+
+<!-- login template -->
+<script type="text/x-template" id="login">
+  <div>
+    <h2>Login</h2>
+    <p v-if="$route.query.redirect">Please login.</p>
+    <form v-on:submit.prevent="login">
+      <label><input v-model="email" placeholder="email" type="email"></label>
+      <label><input v-model="pass" placeholder="password" type="password"></label>
+      <button type="submit">LOGIN</button>
+      <p v-if="error" class="error">You have failed to login.</p>
+    </form>
+  </div>
+</script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-router"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
