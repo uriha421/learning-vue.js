@@ -1,2 +1,2 @@
-# learning-vuejs
+# learning-vue.js
 learning vue.js
