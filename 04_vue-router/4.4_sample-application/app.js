@@ -37,6 +37,7 @@ var Auth = {
 // APIs
 //------------------------------------------------
 // get users by APIs
+// TODO: I do not understand those functions.
 var getUsers = function(callback) {
   setTimeout(function() {
     callback(null, userData)
@@ -83,6 +84,7 @@ var UserList = {
   },
 
   // watching changes of $route
+  // TODO: I do not understand "watch."
   watch: {
     '$route': 'fetchData'
   },
